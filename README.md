@@ -52,6 +52,6 @@ Licença
 Este projeto está licenciado sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
 
 Contato
-Nome: CARLOS J S BEZERRA
-Email: karlos.juliano123@gmail.com
-GitHub: https://github.com/carlosjsbezerra
+- Nome: CARLOS J S BEZERRA
+- Email: karlos.juliano123@gmail.com
+- GitHub: https://github.com/carlosjsbezerra
