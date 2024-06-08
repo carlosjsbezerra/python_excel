@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 from openpyxl import load_workbook
-#teste
+
 # Caminho para o arquivo Excel dentro da pasta Pasta001
 file_path = os.path.join('Pasta001', 'planilha001.xlsx')
 
