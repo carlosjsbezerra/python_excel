@@ -1,5 +1,7 @@
 from openpyxl import load_workbook
 
+from araguaina_ZaA import organizar_coluna_f
+
 def copiar_linhas_araguaina():
     # Carregar a planilha "nova_planilha"
     wb_escolas = load_workbook(filename='Pasta002/nova_planilha.xlsx', data_only=True)
@@ -40,3 +42,5 @@ def copiar_linhas_araguaina():
 
 # Chamar a função para executar o processo
 copiar_linhas_araguaina()
+# Chamar a função para executar o processo
+organizar_coluna_f()
