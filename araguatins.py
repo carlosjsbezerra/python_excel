@@ -1,6 +1,9 @@
 from openpyxl import load_workbook
 
+from araguatins_ZaA import organizar_coluna_f
+
 def copiar_linhas_araguatins():
+
     # Carregar a planilha "nova_planilha"
     wb_escolas = load_workbook(filename='Pasta002/nova_planilha.xlsx', data_only=True)
     print("Subplanilhas em nova_planilha.xlsx:", wb_escolas.sheetnames)
@@ -47,3 +50,5 @@ def copiar_linhas_araguatins():
 
 # Chamar a função para executar o processo
 copiar_linhas_araguatins()
+# Chamar a função para executar o processo
+organizar_coluna_f()
