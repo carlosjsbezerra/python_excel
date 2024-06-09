@@ -19,7 +19,7 @@ def organizar_coluna_f():
     # Inicializa uma lista para armazenar os valores da coluna "F"
     valores_coluna_f = []
 
-    # Percorrer as linhas da coluna "F" da linha 11 até a linha 26
+    # Percorrer as linhas da coluna "F" da linha 11 até a linha 85
     for row in ws_sre_araguaina.iter_rows(min_row=start_line, max_row=finish_line, min_col=6, max_col=6, values_only=True):
         valores_coluna_f.append(row[0])
 

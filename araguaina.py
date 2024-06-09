@@ -40,7 +40,7 @@ def copiar_linhas_araguaina():
 
     print("Linhas copiadas com sucesso para a subplanilha 'SRE ARAGUAINA'.")
 
-# Chamar a função para executar o processo
-copiar_linhas_araguaina()
+
+#copiar_linhas_araguaina()
 # Chamar a função para executar o processo
 organizar_coluna_f()
