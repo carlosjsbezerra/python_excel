@@ -1,6 +1,10 @@
 from openpyxl import load_workbook
 
 def organizar_coluna_f():
+
+    start_line = 11
+    finish_line = 26
+
     # Mapeamento dos status para a ordem desejada
     status_ordem = {
         'Não iniciado': 1,
@@ -16,7 +20,7 @@ def organizar_coluna_f():
     valores_coluna_f = []
 
     # Percorrer as linhas da coluna "F" da linha 11 até a linha 26
-    for row in ws_sre_pedro_arraias.iter_rows(min_row=11, max_row=26, min_col=6, max_col=6, values_only=True):
+    for row in ws_sre_pedro_arraias.iter_rows(min_row=start_line, max_row=finish_line, min_col=6, max_col=6, values_only=True):
         valores_coluna_f.append(row[0])
 
     # Ordenar os valores de acordo com a ordem especificada
