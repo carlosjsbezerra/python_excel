@@ -1,31 +1,32 @@
 from openpyxl import load_workbook
 
-# Mapeamento dos status para a ordem desejada
-status_ordem = {
-    'Não iniciado': 1,
-    'Em cadastramento': 2,
-    'Em análise do MEC': 3
-}
+def organizar_coluna_f():
+    # Mapeamento dos status para a ordem desejada
+    status_ordem = {
+        'Não iniciado': 1,
+        'Em cadastramento': 2,
+        'Em análise do MEC': 3
+    }
 
-# Carregar a planilha "planilha002" e obter a subplanilha "SRE PEDRO AFONSO"
-wb_planilha002 = load_workbook(filename='Pasta002/planilha002.xlsx')
-ws_sre_pedro_afonso = wb_planilha002['SRE PEDRO AFONSO']
+    # Carregar a planilha "planilha002" e obter a subplanilha "SRE PEDRO AFONSO"
+    wb_planilha002 = load_workbook(filename='Pasta002/planilha002.xlsx')
+    ws_sre_pedro_afonso = wb_planilha002['SRE PEDRO AFONSO']
 
-# Inicializa uma lista para armazenar os valores da coluna "F"
-valores_coluna_f = []
+    # Inicializa uma lista para armazenar os valores da coluna "F"
+    valores_coluna_f = []
 
-# Percorrer as linhas da coluna "F" da linha 11 até a linha 40
-for row in ws_sre_pedro_afonso.iter_rows(min_row=11, max_row=40, min_col=6, max_col=6, values_only=True):
-    valores_coluna_f.append(row[0])
+    # Percorrer as linhas da coluna "F" da linha 11 até a linha 40
+    for row in ws_sre_pedro_afonso.iter_rows(min_row=11, max_row=40, min_col=6, max_col=6, values_only=True):
+        valores_coluna_f.append(row[0])
 
-# Ordenar os valores de acordo com a ordem especificada
-valores_coluna_f.sort(key=lambda x: status_ordem.get(x, 0))
+    # Ordenar os valores de acordo com a ordem especificada
+    valores_coluna_f.sort(key=lambda x: status_ordem.get(x, 0))
 
-# Atualizar os valores na coluna "F" mantendo a ordem
-for i, valor in enumerate(valores_coluna_f):
-    ws_sre_pedro_afonso.cell(row=11 + i, column=6, value=valor)
+    # Atualizar os valores na coluna "F" mantendo a ordem
+    for i, valor in enumerate(valores_coluna_f):
+        ws_sre_pedro_afonso.cell(row=11 + i, column=6, value=valor)
 
-# Salvar as alterações na planilha "planilha002"
-wb_planilha002.save(filename='Pasta002/planilha002.xlsx')
+    # Salvar as alterações na planilha "planilha002"
+    wb_planilha002.save(filename='Pasta002/planilha002.xlsx')
 
-print("Coluna 'F' organizada com sucesso na subplanilha 'SRE PEDRO AFONSO' da linha 11 até a linha 40.")
+    print("Coluna 'F' organizada com sucesso na subplanilha 'SRE PEDRO AFONSO' da linha 11 até a linha 40.")
