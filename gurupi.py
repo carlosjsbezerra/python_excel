@@ -1,5 +1,7 @@
 from openpyxl import load_workbook
 
+from gurupi_ZaA import organizar_coluna_f
+
 def copiar_linhas_gurupi():
     # Carregar a planilha "nova_planilha"
     wb_escolas = load_workbook(filename='Pasta002/nova_planilha.xlsx', data_only=True)
@@ -47,3 +49,5 @@ def copiar_linhas_gurupi():
 
 # Chamada da função
 copiar_linhas_gurupi()
+# Chamar a função organizar_coluna_f
+organizar_coluna_f()

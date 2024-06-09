@@ -1,5 +1,7 @@
 from openpyxl import load_workbook
 
+from miracema_ZaA import organizar_coluna_f
+
 def copiar_linhas_para_sre(sre_nome, valor_coluna_c_procurado):
     # Carregar a planilha "nova_planilha"
     wb_escolas = load_workbook(filename='Pasta002/nova_planilha.xlsx', data_only=True)
@@ -47,3 +49,5 @@ def copiar_linhas_para_sre(sre_nome, valor_coluna_c_procurado):
 
 # Chamada da função
 copiar_linhas_para_sre('SRE MIRACEMA DO TOCANTINS', 'MIRACEMA')
+# Chamar a função organizar_coluna_f
+organizar_coluna_f()
