@@ -1,36 +1,16 @@
 import pandas as pd
 import os
 
-#from araguaina import copiar_linhas_araguaina
-#from araguatins import copiar_linhas_araguatins
-#from arraias import copiar_linhas_arraias
-#from colinas import copiar_linhas_colinas
-#from dianopolis import copiar_linhas_dianopolis
-#from guarai import copiar_linhas_guarai
-#from gurupi import copiar_linhas_gurupi
-#from miracema import copiar_linhas_miracema
-#from palmas import copiar_linhas_palmas
-#from paraiso import copiar_linhas_paraiso
-#from pedro_afonso import copiar_linhas_para_pedro_afonso
-#from porto_nacional import copiar_linhas_porto_nacional
-#from tocantinopolis import copiar_linhas_tocantinopolis
-
 def process_excel_files():
     # Caminho para o arquivo Excel dentro da pasta Pasta001
-    file_path = os.path.join('Pasta001', 'planilha001.xlsx')
+    file_path = os.path.join('planilha001.xlsx')
 
     # Carregar a planilha Excel especificando o engine openpyxl
     df = pd.read_excel(file_path, engine='openpyxl')
 
-    # Exibir colunas originais
-    print("Colunas originais:", df.columns)
-
     # Apagar as colunas especificadas
     columns_to_drop = ["UF", "Localização", "Situação SIMEC", "Valor Total do Repasse", "Total Custeio", "Total Capital", "Valor Total", "Data Envio Mec"]
     df = df.drop(columns=columns_to_drop)
-
-    # Exibir colunas restantes
-    print("Colunas restantes:", df.columns)
 
     # Manter as colunas desejadas e reordenar se necessário
     desired_columns = ["Código INEP", "Nome da Escola", "Município", "Esfera", "Status PDDE"]
@@ -39,25 +19,7 @@ def process_excel_files():
     # Inserir a nova coluna "Regional" entre "Nome da Escola" e "Município"
     df.insert(df.columns.get_loc("Município"), "Regional", "")
 
-    # Exibir colunas finais
-    print("Colunas finais:", df.columns)
-
-    # Caminho para salvar a nova planilha Excel dentro da pasta Pasta002
-    new_file_path = os.path.join('Pasta002', 'nova_planilha.xlsx')
-
-    # Criar o ExcelWriter com openpyxl
-    with pd.ExcelWriter(new_file_path, engine='openpyxl') as writer:
-        # Salvar o DataFrame na aba 'Escolas'
-        df.to_excel(writer, index=False, sheet_name='Escolas')
-
-        # Criar a aba 'referencia_escolas' se não existir
-        if 'referencia_escolas' not in writer.book.sheetnames:
-            writer.book.create_sheet(title='referencia_escolas')
-
-        # Adicionar colunas 'MUNICIPIO' e 'REGIONAL' na aba 'referencia_escolas'
-        ws = writer.book['referencia_escolas']
-        ws.append(["MUNICIPIO", "REGIONAL"])
-        Escolas = [
+    Escolas = [
             ("ANANÁS", "ARAGUAINA"),  #ARAGUAINA
             ("ARAGOMINAS", "ARAGUAINA"),
             ("ARAGUAÍNA", "ARAGUAINA"),
@@ -195,39 +157,34 @@ def process_excel_files():
             ("PALMEIRAS DO TOCANTINS", "TOCANTINOPOLIS"),
             ("SANTA TEREZINHA DO TOCANTINS", "TOCANTINOPOLIS"),
             ("TOCANTINÓPOLIS", "TOCANTINOPOLIS")
-        ]
-        for dado in Escolas:
-            ws.append(dado)
-        
-        # Adicionar a função VLOOKUP nas células C2 até C498 da planilha 'Escolas'
-        ws = writer.book['Escolas']
-        for row in range(2, 499):
-            ws[f'C{row}'] = f'=VLOOKUP(D{row}, referencia_escolas!$A$1:$B$138, 2, 0)'
-        
+    ]
+     # Criar um dicionário a partir da lista de escolas para facilitar a pesquisa
+    escolas_dict = dict(Escolas)
 
-        # Adicionar filtros às colunas especificadas
-        ws.auto_filter.ref = ws.dimensions
+    # Aplicar o VLOOKUP usando a função map
+    df["Regional"] = df["Município"].map(escolas_dict)
 
+    # Caminho para salvar a nova planilha Excel dentro da pasta Pasta002
+    new_file_path = os.path.join('nova_planilha.xlsx')
 
+    # Salvar o DataFrame como uma nova planilha Excel
+    df.to_excel(new_file_path, index=False)
 
-    print(f"Planilha salva em {new_file_path} com as abas 'Escolas' e 'referencia_escolas'")
+    print(f"Planilha processada e salva em '{new_file_path}'")
 
+    # Caminho para a planilha referência de escolas
+    referencia_path = os.path.join('nova_planilha.xlsx')
 
-# Chamar da função Main
-process_excel_files()
+    # Carregar a planilha referência de escolas
+    referencia_df = pd.read_excel(referencia_path, sheet_name='referencia_escolas', engine='openpyxl')
 
-# Chamar das funcoes regionais
+    # Adicionar a coluna 'C' (Município) na aba 'referencia_escolas'
+    referencia_df['C'] = df['Município']
 
-#copiar_linhas_araguaina()
-#copiar_linhas_araguatins()
-#copiar_linhas_arraias()
-#copiar_linhas_colinas()
-#copiar_linhas_dianopolis()
-#copiar_linhas_guarai()
-#copiar_linhas_gurupi()
-#copiar_linhas_miracema()
-#copiar_linhas_palmas()
-#copiar_linhas_paraiso()
-#copiar_linhas_para_pedro_afonso()
-#copiar_linhas_porto_nacional()
-#copiar_linhas_tocantinopolis()
+    # Salvar a planilha de referência de escolas
+    referencia_df.to_excel(referencia_path, index=False, sheet_name='referencia_escolas')
+
+    return new_file_path
+
+if __name__ == "__main__":
+    process_excel_files()
