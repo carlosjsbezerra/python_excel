@@ -1,6 +1,6 @@
 from openpyxl import load_workbook
 
-#from palmas_ZaA import organizar_coluna_f
+from palmas_ZaA import organizar_coluna_f
 
 def copiar_linhas_palmas():
     # Carregar a planilha "nova_planilha"
@@ -11,7 +11,7 @@ def copiar_linhas_palmas():
     ws_escolas = wb_escolas['Escolas']
 
     # Carregar a planilha "planilha002" e obter a subplanilha especificada
-    wb_planilha002 = load_workbook(filename='./planilha002.xlsx')
+    wb_planilha002 = load_workbook(filename='PIEC_2024_v2/lista_escola_selecionada.xlsx')
     print("Subplanilhas em planilha002.xlsx:", wb_planilha002.sheetnames)
 
     ws_sre = wb_planilha002['SRE PALMAS']
@@ -43,9 +43,12 @@ def copiar_linhas_palmas():
         print(f"{len(linhas_para_copiar)} linhas copiadas para 'SRE PALMAS'.")
 
     # Salvar as alterações na planilha "planilha002"
-    wb_planilha002.save(filename='./planilha002.xlsx')
+    wb_planilha002.save(filename='PIEC_2024_v2/lista_escola_selecionada.xlsx')
 
     print(f"Linhas copiadas com sucesso para a subplanilha 'SRE PALMAS'.")
+
+    # Chamar a função organizar_coluna_f
+    organizar_coluna_f()
 
 # Chamada da função
 copiar_linhas_palmas()

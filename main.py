@@ -1,19 +1,19 @@
 import pandas as pd
 import os
 
-#from araguaina import copiar_linhas_araguaina
-#from araguatins import copiar_linhas_araguatins
-#from arraias import copiar_linhas_arraias
-#from colinas import copiar_linhas_colinas
-#from dianopolis import copiar_linhas_dianopolis
-#from guarai import copiar_linhas_guarai
-#from gurupi import copiar_linhas_gurupi
-#from miracema import copiar_linhas_miracema
-#from palmas import copiar_linhas_palmas
-#from paraiso import copiar_linhas_paraiso
-#from pedro_afonso import copiar_linhas_para_pedro_afonso
-#from porto_nacional import copiar_linhas_porto_nacional
-#from tocantinopolis import copiar_linhas_tocantinopolis
+from araguaina import copiar_linhas_araguaina
+from araguatins import copiar_linhas_araguatins
+from arraias import copiar_linhas_arraias
+from colinas import copiar_linhas_colinas
+from dianopolis import copiar_linhas_dianopolis
+from guarai import copiar_linhas_guarai
+from gurupi import copiar_linhas_gurupi
+from miracema import copiar_linhas_miracema
+from palmas import copiar_linhas_palmas
+from paraiso import copiar_linhas_paraiso
+from pedro_afonso import copiar_linhas_para_pedro_afonso
+from porto_nacional import copiar_linhas_porto_nacional
+from tocantinopolis import copiar_linhas_tocantinopolis
 
 def process_excel_files():
     # Caminho para o arquivo Excel dentro da pasta Pasta001
@@ -214,20 +214,19 @@ def process_excel_files():
 
 
 # Chamar da função Main
-process_excel_files()
+#process_excel_files()
 
 # Chamar das funcoes regionais
-
-#copiar_linhas_araguaina()
-#copiar_linhas_araguatins()
-#copiar_linhas_arraias()
-#copiar_linhas_colinas()
-#copiar_linhas_dianopolis()
-#copiar_linhas_guarai()
-#copiar_linhas_gurupi()
-#copiar_linhas_miracema()
-#copiar_linhas_palmas()
-#copiar_linhas_paraiso()
-#copiar_linhas_para_pedro_afonso()
-#copiar_linhas_porto_nacional()
-#copiar_linhas_tocantinopolis()
+copiar_linhas_araguaina()
+copiar_linhas_araguatins()
+copiar_linhas_arraias()
+copiar_linhas_colinas()
+copiar_linhas_dianopolis()
+copiar_linhas_guarai()
+copiar_linhas_gurupi()
+copiar_linhas_miracema()
+copiar_linhas_palmas()
+copiar_linhas_paraiso()
+copiar_linhas_para_pedro_afonso()
+copiar_linhas_porto_nacional()
+copiar_linhas_tocantinopolis()

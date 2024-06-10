@@ -1,190 +1,56 @@
-import pandas as pd
-import os
+from openpyxl import load_workbook
 
-def process_excel_files():
-    # Caminho para o arquivo Excel dentro da pasta Pasta001
-    file_path = os.path.join('planilha001.xlsx')
+from palmas_ZaA import organizar_coluna_f
 
-    # Carregar a planilha Excel especificando o engine openpyxl
-    df = pd.read_excel(file_path, engine='openpyxl')
+def copiar_linhas_palmas():
+    # Carregar a planilha "nova_planilha"
+    wb_escolas = load_workbook(filename='./nova_planilha.xlsx', data_only=True)
+    print("Subplanilhas em nova_planilha.xlsx:", wb_escolas.sheetnames)
 
-    # Apagar as colunas especificadas
-    columns_to_drop = ["UF", "Localização", "Situação SIMEC", "Valor Total do Repasse", "Total Custeio", "Total Capital", "Valor Total", "Data Envio Mec"]
-    df = df.drop(columns=columns_to_drop)
+    # Obter a subplanilha "Escolas"
+    ws_escolas = wb_escolas['Escolas']
 
-    # Manter as colunas desejadas e reordenar se necessário
-    desired_columns = ["Código INEP", "Nome da Escola", "Município", "Esfera", "Status PDDE"]
-    df = df[desired_columns]
+    # Carregar a planilha "planilha002" e obter a subplanilha especificada
+    wb_planilha002 = load_workbook(filename='PIEC_2024_v2/lista_escola_selecionada.xlsx')
+    print("Subplanilhas em planilha002.xlsx:", wb_planilha002.sheetnames)
 
-    # Inserir a nova coluna "Regional" entre "Nome da Escola" e "Município"
-    df.insert(df.columns.get_loc("Município"), "Regional", "")
+    ws_sre = wb_planilha002['SRE PALMAS']
 
-    Escolas = [
-            ("ANANÁS", "ARAGUAINA"),  #ARAGUAINA
-            ("ARAGOMINAS", "ARAGUAINA"),
-            ("ARAGUAÍNA", "ARAGUAINA"),
-            ("ARAGUANÃ", "ARAGUAINA"),
-            ("BABAÇULÂNDIA", "ARAGUAINA"),
-            ("BARRA DO OURO", "ARAGUAINA"),
-            ("CAMPOS LINDOS", "ARAGUAINA"),
-            ("CARMOLÂNDIA", "ARAGUAINA"),
-            ("FILADÉLFIA", "ARAGUAINA"),
-            ("GOIATINS", "ARAGUAINA"),
-            ("MURICILÂNDIA", "ARAGUAINA"),
-            ("NOVA OLINDA", "ARAGUAINA"),
-            ("NOVO ALEGRE", "ARAGUAINA"),
-            ("PIRAQUÊ", "ARAGUAINA"),
-            ("RIACHINHO", "ARAGUAINA"),
-            ("SANTA FÉ DO ARAGUAIA", "ARAGUAINA"),
-            ("WANDERLÂNDIA", "ARAGUAINA"),
-            ("XAMBIOÁ", "ARAGUAINA"),
-            ("ARAGUATINS", "ARAGUATINS"), #ARAGUATINS
-            ("AUGUSTINÓPOLIS", "ARAGUATINS"),
-            ("AXIXÁ DO TOCANTINS", "ARAGUATINS"),
-            ("BURITI DO TOCANTINS", "ARAGUATINS"),
-            ("CARRASCO BONITO", "ARAGUATINS"),
-            ("ESPERANTINA", "ARAGUATINS"),
-            ("PRAIA NORTE", "ARAGUATINS"),
-            ("SAMPAIO", "ARAGUATINS"),
-            ("SÃO BENTO DO TOCANTINS", "ARAGUATINS"),
-            ("SÃO MIGUEL DO TOCANTINS", "ARAGUATINS"),
-            ("SÃO SEBASTIÃO DO TOCANTINS", "ARAGUATINS"),
-            ("SÍTIO NOVO DO TOCANTINS", "ARAGUATINS"),
-            ("ARRAIAS", "ARRAIAS"), # ARRAIAS
-            ("AURORA DO TOCANTINS", "ARRAIAS"),
-            ("COMBINADO", "ARRAIAS"),
-            ("LAVANDEIRA", "ARRAIAS"),
-            ("PARANÃ", "ARRAIAS"),
-            ("ARAPOEMA", "COLINAS"), #COLINAS
-            ("BANDEIRANTES DO TOCANTINS", "COLINAS"),
-            ("BERNARDO SAYÃO", "COLINAS"),
-            ("BRASILÂNDIA DO TOCANTINS", "COLINAS"),
-            ("COLINAS DO TOCANTINS", "COLINAS"),
-            ("ITAPIRATINS", "COLINAS"),
-            ("JUARINA", "COLINAS"),
-            ("PALMEIRANTE", "COLINAS"),
-            ("PAU D'ARCO", "COLINAS"),
-            ("TUPIRATINS", "COLINAS"),
-            ("ALMAS", "DIANOPOLIS"), #DIANOPOLIS
-            ("CONCEIÇÃO DO TOCANTINS", "DIANOPOLIS"),
-            ("DIANÓPOLIS", "DIANOPOLIS"),
-            ("NOVO JARDIM", "DIANOPOLIS"),
-            ("PONTE ALTA DO BOM JESUS", "DIANOPOLIS"),
-            ("PORTO ALEGRE DO TOCANTINS", "DIANOPOLIS"),
-            ("RIO DA CONCEIÇÃO", "DIANOPOLIS"),
-            ("TAGUATINGA", "DIANOPOLIS"),
-            ("TAIPAS DO TOCANTINS", "DIANOPOLIS"),
-            ("COLMÉIA", "GUARAI"), #GUARAI
-            ("COUTO MAGALHÃES", "GUARAI"),
-            ("GOIANORTE", "GUARAI"),
-            ("GUARAÍ", "GUARAI"),
-            ("ITAPORÃ DO TOCANTINS", "GUARAI"),
-            ("PEQUIZEIRO", "GUARAI"),
-            ("PRESIDENTE KENNEDY", "GUARAI"),
-            ("TABOCÃO", "GUARAI"),
-            ("ALIANÇA DO TOCANTINS", "GURUPI"),
-            ("ALVORADA", "GURUPI"),
-            ("ARAGUAÇU", "GURUPI"),
-            ("CARIRI DO TOCANTINS", "GURUPI"),
-            ("CRIXÁS DO TOCANTINS", "GURUPI"),
-            ("DUERÉ", "GURUPI"),
-            ("FIGUEIRÓPOLIS", "GURUPI"),
-            ("FORMOSO DO ARAGUAIA", "GURUPI"),
-            ("GURUPI", "GURUPI"),
-            ("JAÚ DO TOCANTINS", "GURUPI"),
-            ("PALMEIRÓPOLIS", "GURUPI"),
-            ("PEIXE", "GURUPI"),
-            ("SANDOLÂNDIA", "GURUPI"),
-            ("SÃO SALVADOR DO TOCANTINS", "GURUPI"),
-            ("SÃO VALÉRIO", "GURUPI"),
-            ("SUCUPIRA", "GURUPI"),
-            ("TALISMÃ", "GURUPI"),
-            ("DOIS IRMÃOS DO TOCANTINS", "MIRACEMA"),
-            ("LIZARDA", "MIRACEMA"),
-            ("MIRACEMA DO TOCANTINS", "MIRACEMA"),
-            ("MIRANORTE", "MIRACEMA"),
-            ("RIO DOS BOIS", "MIRACEMA"),
-            ("TOCANTÍNIA", "MIRACEMA"),
-            ("APARECIDA DO RIO NEGRO", "PALMAS"),
-            ("LAGOA DO TOCANTINS", "PALMAS"),
-            ("LAJEADO", "PALMAS"),
-            ("MATEIROS", "PALMAS"),
-            ("NOVO ACORDO", "PALMAS"),
-            ("PALMAS", "PALMAS"),
-            ("RIO SONO", "PALMAS"),
-            ("SANTA TEREZA DO TOCANTINS", "PALMAS"),
-            ("SÃO FÉLIX DO TOCANTINS", "PALMAS"),
-            ("ABREULÂNDIA", "PARAISO"),
-            ("ARAGUACEMA", "PARAISO"),
-            ("BARROLÂNDIA", "PARAISO"),
-            ("CASEARA", "PARAISO"),
-            ("CRISTALÂNDIA", "PARAISO"),
-            ("DIVINÓPOLIS DO TOCANTINS", "PARAISO"),
-            ("LAGOA DA CONFUSÃO", "PARAISO"),
-            ("MARIANÓPOLIS DO TOCANTINS", "PARAISO"),
-            ("NOVA ROSALÂNDIA", "PARAISO"),
-            ("PARAÍSO DO TOCANTINS", "PARAISO"),
-            ("PIUM", "PARAISO"),
-            ("PUGMIL", "PARAISO"),
-            ("BOM JESUS DO TOCANTINS", "PEDRO AFONSO"),
-            ("CENTENÁRIO", "PEDRO AFONSO"),
-            ("ITACAJÁ", "PEDRO AFONSO"),
-            ("PEDRO AFONSO", "PEDRO AFONSO"),
-            ("RECURSOLÂNDIA", "PEDRO AFONSO"),
-            ("SANTA MARIA DO TOCANTINS", "PEDRO AFONSO"),
-            ("TUPIRAMA", "PEDRO AFONSO"),
-            ("BREJINHO DE NAZARÉ", "PORTO NACIONAL"),
-            ("CHAPADA DA NATIVIDADE", "PORTO NACIONAL"),
-            ("FÁTIMA", "PORTO NACIONAL"),
-            ("IPUEIRAS", "PORTO NACIONAL"),
-            ("MONTE DO CARMO", "PORTO NACIONAL"),
-            ("NATIVIDADE", "PORTO NACIONAL"),
-            ("OLIVEIRA DE FÁTIMA", "PORTO NACIONAL"),
-            ("PINDORAMA DO TOCANTINS", "PORTO NACIONAL"),
-            ("PONTE ALTA DO TOCANTINS", "PORTO NACIONAL"),
-            ("PORTO NACIONAL", "PORTO NACIONAL"),
-            ("SANTA RITA DO TOCANTINS", "PORTO NACIONAL"),
-            ("SANTA ROSA DO TOCANTINS", "PORTO NACIONAL"),
-            ("SILVANÓPOLIS", "PORTO NACIONAL"),
-            ("AGUIARNÓPOLIS", "TOCANTINOPOLIS"),
-            ("ANGICO", "TOCANTINOPOLIS"),
-            ("CACHOEIRINHA", "TOCANTINOPOLIS"),
-            ("DARCINÓPOLIS", "TOCANTINOPOLIS"),
-            ("ITAGUATINS", "TOCANTINOPOLIS"),
-            ("LUZINÓPOLIS", "TOCANTINOPOLIS"),
-            ("MAURILÂNDIA DO TOCANTINS", "TOCANTINOPOLIS"),
-            ("NAZARÉ", "TOCANTINOPOLIS"),
-            ("PALMEIRAS DO TOCANTINS", "TOCANTINOPOLIS"),
-            ("SANTA TEREZINHA DO TOCANTINS", "TOCANTINOPOLIS"),
-            ("TOCANTINÓPOLIS", "TOCANTINOPOLIS")
-    ]
-     # Criar um dicionário a partir da lista de escolas para facilitar a pesquisa
-    escolas_dict = dict(Escolas)
+    # Inicializa uma lista para armazenar as linhas que serão copiadas
+    linhas_para_copiar = []
 
-    # Aplicar o VLOOKUP usando a função map
-    df["Regional"] = df["Município"].map(escolas_dict)
+    # Iterar sobre as linhas da subplanilha "Escolas"
+    for row in ws_escolas.iter_rows(min_row=2, values_only=True):
+        valor_coluna_c = row[2]  # Valor na coluna C
+        # Imprimir o valor da coluna C para cada linha
+        print("Valor na coluna C:", valor_coluna_c)
+        if valor_coluna_c == 'PALMAS':  # Verificar se o valor na coluna "C" é o procurado
+            linhas_para_copiar.append(row)
+            print("Linha encontrada:", row)
 
-    # Caminho para salvar a nova planilha Excel dentro da pasta Pasta002
-    new_file_path = os.path.join('nova_planilha.xlsx')
+    # Verificar se alguma linha foi encontrada
+    if not linhas_para_copiar:
+        print(f"Nenhuma linha encontrada com o valor 'PALMAS' na coluna C.")
 
-    # Salvar o DataFrame como uma nova planilha Excel
-    df.to_excel(new_file_path, index=False)
+    # Adicionar as linhas filtradas começando na célula A11 da subplanilha especificada
+    start_row = 11
+    for i, linha in enumerate(linhas_para_copiar):
+        for j, value in enumerate(linha):
+            ws_sre.cell(row=start_row + i, column=j + 1, value=value)
 
-    print(f"Planilha processada e salva em '{new_file_path}'")
+    # Verificar se as linhas foram adicionadas
+    if linhas_para_copiar:
+        print(f"{len(linhas_para_copiar)} linhas copiadas para 'SRE PALMAS'.")
 
-    # Caminho para a planilha referência de escolas
-    referencia_path = os.path.join('nova_planilha.xlsx')
+    # Salvar as alterações na planilha "planilha002"
+    wb_planilha002.save(filename='PIEC_2024_v2/lista_escola_selecionada.xlsx')
 
-    # Carregar a planilha referência de escolas
-    referencia_df = pd.read_excel(referencia_path, sheet_name='referencia_escolas', engine='openpyxl')
+    print(f"Linhas copiadas com sucesso para a subplanilha 'SRE PALMAS'.")
 
-    # Adicionar a coluna 'C' (Município) na aba 'referencia_escolas'
-    referencia_df['C'] = df['Município']
+    # Chamar a função organizar_coluna_f
+    organizar_coluna_f()
 
-    # Salvar a planilha de referência de escolas
-    referencia_df.to_excel(referencia_path, index=False, sheet_name='referencia_escolas')
-
-    return new_file_path
-
-if __name__ == "__main__":
-    process_excel_files()
+# Chamada da função
+copiar_linhas_palmas()
+# Chamar a função organizar_coluna_f
+#organizar_coluna_f()

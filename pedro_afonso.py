@@ -10,14 +10,14 @@ def copiar_linhas_para_pedro_afonso():
     ]
 
     # Carregar a planilha "nova_planilha"
-    wb_nova_planilha = load_workbook(filename='Pasta002/nova_planilha.xlsx', data_only=True)
+    wb_nova_planilha = load_workbook(filename='./nova_planilha.xlsx', data_only=True)
     print("Subplanilhas em nova_planilha.xlsx:", wb_nova_planilha.sheetnames)
 
     # Obter a subplanilha "Escolas" na planilha "nova_planilha"
     ws_escolas = wb_nova_planilha['Escolas']
 
     # Carregar a planilha "planilha002" e obter a subplanilha "SRE PEDRO AFONSO"
-    wb_planilha002 = load_workbook(filename='Pasta002/planilha002.xlsx')
+    wb_planilha002 = load_workbook(filename='PIEC_2024_v2/lista_escola_selecionada.xlsx')
     print("Subplanilhas em planilha002.xlsx:", wb_planilha002.sheetnames)
 
     ws_sre_pedro_afonso = wb_planilha002['SRE PEDRO AFONSO']
@@ -57,12 +57,15 @@ def copiar_linhas_para_pedro_afonso():
             ws_sre_pedro_afonso.cell(row=start_row + i, column=j + 1, value=value)
 
     # Salvar as alterações na planilha "planilha002"
-    wb_planilha002.save(filename='Pasta002/planilha002.xlsx')
+    wb_planilha002.save(filename='PIEC_2024_v2/lista_escola_selecionada.xlsx')
 
     print("Linhas copiadas com sucesso para a subplanilha 'SRE PEDRO AFONSO'.")
 
-# Chamar a função para executar o processo
-copiar_linhas_para_pedro_afonso()
+    # Chamar a função organizar_coluna_f
+    organizar_coluna_f()
 
 # Chamar a função para executar o processo
-organizar_coluna_f()
+#copiar_linhas_para_pedro_afonso()
+
+# Chamar a função para executar o processo
+#organizar_coluna_f()

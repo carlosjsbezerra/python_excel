@@ -4,14 +4,14 @@ from guarai_ZaA import organizar_coluna_f
 
 def copiar_linhas_guarai():
     # Carregar a planilha "nova_planilha"
-    wb_escolas = load_workbook(filename='Pasta002/nova_planilha.xlsx', data_only=True)
+    wb_escolas = load_workbook(filename='./nova_planilha.xlsx', data_only=True)
     print("Subplanilhas em nova_planilha.xlsx:", wb_escolas.sheetnames)
 
     # Obter a subplanilha "Escolas"
     ws_escolas = wb_escolas['Escolas']
 
     # Carregar a planilha "planilha002" e obter a subplanilha "SRE GUARAI"
-    wb_planilha002 = load_workbook(filename='Pasta002/planilha002.xlsx')
+    wb_planilha002 = load_workbook(filename='PIEC_2024_v2/lista_escola_selecionada.xlsx')
     print("Subplanilhas em planilha002.xlsx:", wb_planilha002.sheetnames)
 
     ws_sre_guarai = wb_planilha002['SRE GUARAI']
@@ -43,11 +43,14 @@ def copiar_linhas_guarai():
         print(f"{len(linhas_para_copiar)} linhas copiadas para 'SRE GUARAI'.")
 
     # Salvar as alterações na planilha "planilha002"
-    wb_planilha002.save(filename='Pasta002/planilha002.xlsx')
+    wb_planilha002.save(filename='PIEC_2024_v2/lista_escola_selecionada.xlsx')
 
     print("Linhas copiadas com sucesso para a subplanilha 'SRE GUARAI'.")
 
+    # Chamar a função organizar_coluna_f
+    organizar_coluna_f()
+
 # Chamada da função
-copiar_linhas_guarai()
+#copiar_linhas_guarai()
 # Chamar a função organizar_coluna_f
-organizar_coluna_f()
+#organizar_coluna_f()

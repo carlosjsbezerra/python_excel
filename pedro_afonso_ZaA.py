@@ -9,7 +9,7 @@ def organizar_coluna_f():
     }
 
     # Carregar a planilha "planilha002" e obter a subplanilha "SRE PEDRO AFONSO"
-    wb_planilha002 = load_workbook(filename='Pasta002/planilha002.xlsx')
+    wb_planilha002 = load_workbook(filename='PIEC_2024_v2/lista_escola_selecionada.xlsx')
     ws_sre_pedro_afonso = wb_planilha002['SRE PEDRO AFONSO']
 
     # Inicializa uma lista para armazenar os valores da coluna "F"
@@ -27,6 +27,6 @@ def organizar_coluna_f():
         ws_sre_pedro_afonso.cell(row=11 + i, column=6, value=valor)
 
     # Salvar as alterações na planilha "planilha002"
-    wb_planilha002.save(filename='Pasta002/planilha002.xlsx')
+    wb_planilha002.save(filename='PIEC_2024_v2/lista_escola_selecionada.xlsx')
 
     print("Coluna 'F' organizada com sucesso na subplanilha 'SRE PEDRO AFONSO' da linha 11 até a linha 40.")
